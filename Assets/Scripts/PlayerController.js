@@ -35,13 +35,15 @@ class PlayerController extends MonoBehaviour {
 		
 		var movement : Vector3= new Vector3 (moveHorizontal, 0.0f, moveVertical);
 		
-		rigidbody.velocity = movement * speed;
+		var rigidBody = GetComponent.<Rigidbody>();
+				
+		rigidBody.velocity = movement * speed;
 		
-		rigidbody.position = new Vector3(
-			Mathf.Clamp(rigidbody.position.x, boundary.xMin, boundary.xMax), 
+		rigidBody.position = new Vector3(
+			Mathf.Clamp(rigidBody.position.x, boundary.xMin, boundary.xMax), 
 			0.0, 
-			Mathf.Clamp(rigidbody.position.z, boundary.zMin, boundary.zMax));
+			Mathf.Clamp(rigidBody.position.z, boundary.zMin, boundary.zMax));
 			
-		rigidbody.rotation = Quaternion.Euler(0.0, 0.0, rigidbody.velocity.x * -tilt);
+		rigidBody.rotation = Quaternion.Euler(0.0, 0.0, rigidBody.velocity.x * -tilt);
 	}
 }

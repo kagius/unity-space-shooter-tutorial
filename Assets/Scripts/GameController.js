@@ -11,6 +11,12 @@ var waveWait: float;
 var scoreText: UI.Text;
 var score: int = 0;
 
+var restartText: UI.Text;
+var gameOverText: UI.Text;
+
+private var gameOver : boolean = false;
+private var restart : boolean = false;
+
 function SpawnWaves() {
  	yield WaitForSeconds (startWait);
     while (true)
@@ -23,6 +29,13 @@ function SpawnWaves() {
 			yield WaitForSeconds (spawnWait);
 		}
 		yield WaitForSeconds (waveWait);
+		
+        if (gameOver)
+        {
+            restartText.text = "Press 'R' for Restart";
+            restart = true;
+            break;
+        }
 	}
 }
 
@@ -35,7 +48,22 @@ function UpdateScore() {
 	scoreText.text = "Score: " + score;
 }
 
+function GameOver() {
+	gameOverText.text = "Game over";
+	gameOver = true;
+}
+
 function Start() {
+	restartText.text = "";
+	gameOverText.text = "";
+
 	UpdateScore();
 	SpawnWaves();
+}
+
+function Update() {
+	if (restart && Input.GetKeyDown (KeyCode.R))
+    {
+        Application.LoadLevel (Application.loadedLevel);
+    }
 }

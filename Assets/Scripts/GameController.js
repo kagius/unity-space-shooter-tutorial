@@ -8,7 +8,10 @@ var startWait: float;
 var spawnWait: float;
 var waveWait: float;
 
-function spawnWaves() {
+var scoreText: UI.Text;
+var score: int = 0;
+
+function SpawnWaves() {
  	yield WaitForSeconds (startWait);
     while (true)
     {
@@ -23,6 +26,16 @@ function spawnWaves() {
 	}
 }
 
+function AddScore (newScoreValue : int) {
+    score += newScoreValue;
+    UpdateScore ();
+}
+
+function UpdateScore() {
+	scoreText.text = "Score: " + score;
+}
+
 function Start() {
-	spawnWaves();
+	UpdateScore();
+	SpawnWaves();
 }
